@@ -1,6 +1,6 @@
 '''
 
-Speed Test for Internet - v1.0
+Speed Test for Internet - v1.1
 
 Apache Lisance 2.0
 
@@ -29,7 +29,7 @@ def oneri(downloadspeed, uploadspeed, situation):
         oneri = "İnternet Tarifenizi Veya İnternet Sağlayıcınızı Değiştirmeyi Deneyin."
     elif(downloadspeed > 10 and uploadspeed <= 5 or uploadspeed > 5):
         if(situation == "Kötü!" or situation == "Çok Kötü!"):
-            oneri = "Fiziksel Konumunuzu Değiştirmeyi Deneyin."
+            oneri = "Fiziksel Konumunuzu Değiştirmeyi Deneyin (Daha iyi bir internet için)."
         else:
             oneri = "Sorun Yok Gibi Görünüyor :)"
     return oneri
