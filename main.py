@@ -1,6 +1,6 @@
 '''
 
-Speed Test for Internet - v1.1
+Speed Test for Internet - v1.2
 
 Apache Lisance 2.0
 
@@ -8,9 +8,11 @@ Created by Utku Berkay TAN
 
 '''
 
+import requests as requests
 import speedtest
+import time
 
-s = speedtest.Speedtest()
+
 
 def durum(ping):
     durum = "Hata - Ölçülemedi"
@@ -29,30 +31,50 @@ def oneri(downloadspeed, uploadspeed, situation):
         oneri = "İnternet Tarifenizi Veya İnternet Sağlayıcınızı Değiştirmeyi Deneyin."
     elif(downloadspeed > 10 and uploadspeed <= 5 or uploadspeed > 5):
         if(situation == "Kötü!" or situation == "Çok Kötü!"):
-            oneri = "Fiziksel Konumunuzu Değiştirmeyi Deneyin (Daha iyi bir internet için)."
+            oneri = "Fiziksel Konumunuzu Değiştirmeyi Deneyin."
         else:
-            oneri = "Sorun Yok Gibi Görünüyor :)"
+            oneri = "Sorun Yok :)"
     return oneri
 
+def internetbaglantısınıkontrolet():
+    try:
+        requests.get('https://www.google.com')
+    except:
+        print('[-] İnternet Bağlantısı Bulunamadı')
+        return False
+    else:
+        print('[+] İnternet Bağlantısı Kontrol Ediliyor...')
+        time.sleep(3)
+        print('[+] Bağlantı Başarılı :)')
+        return True
+
+if(internetbaglantısınıkontrolet() == False):
+    input()
+else:
+    s = speedtest.Speedtest()
+    print("[+] Test Yapılıyor...")
+    print(" ")
 
 
-print("Test Yapılıyor...")
-print(" ")
+    indirmehızı = s.download() / 1048576
+    yuklemehızı = s.upload() / 1048576
+    ping = round(s.results.ping)
 
-indirmehızı = s.download() / 1048576
-yuklemehızı = s.upload() / 1048576
-ping = round(s.results.ping)
+    internetdurumu = durum(ping=ping)
+    internetonerisi = oneri(downloadspeed=indirmehızı, uploadspeed=yuklemehızı, situation=internetdurumu)
 
-internetdurumu = durum(ping=ping)
-internetonerisi = oneri(downloadspeed=indirmehızı, uploadspeed=yuklemehızı, situation=internetdurumu)
+    print(f"[+] İndirme Hızı: {indirmehızı:.2f} Mbps")
+    time.sleep(0.7)
+    print(f"[+] Yükleme Hızı: {yuklemehızı:.2f} Mbps")
+    time.sleep(0.7)
+    print(f"[+] Ping: {ping:.2f} ms")
+    print(" ")
+    time.sleep(0.7)
+    print(f"[+] İnternet Durumu: {internetdurumu}")
+    time.sleep(0.7)
+    print("[+] Not: İnternet durumu pinge göre hesaplanır.")
+    print(" ")
+    time.sleep(0.7)
+    print(f"[+] Önerimiz(Beta): {internetonerisi}")
 
-print(f"İndirme Hızı: {indirmehızı:.2f} Mbps")
-print(f"Yükleme Hızı: {yuklemehızı:.2f} Mbps")
-print(f"Ping: {ping:.2f} ms")
-print(" ")
-print(f"İnternet Durumu: {internetdurumu}")
-print("Not: İnternet durumu pinge göre hesaplanır.")
-print(" ")
-print(f"Önerimiz(Beta): {internetonerisi}")
-
-input()
+    input()
