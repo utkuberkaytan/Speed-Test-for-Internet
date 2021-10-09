@@ -8,11 +8,12 @@ Created by Utku Berkay TAN
 
 '''
 
+import time                                             #for the next update
+import colorama                                         #for the next update
 import requests as requests
 import speedtest
-import time
 
-
+colorama.init()
 
 def durum(ping):
     durum = "Hata - Ölçülemedi"
@@ -64,14 +65,11 @@ else:
     internetonerisi = oneri(downloadspeed=indirmehızı, uploadspeed=yuklemehızı, situation=internetdurumu)
 
     print(f"[+] İndirme Hızı: {indirmehızı:.2f} Mbps")
-    time.sleep(0.7)
     print(f"[+] Yükleme Hızı: {yuklemehızı:.2f} Mbps")
-    time.sleep(0.7)
     print(f"[+] Ping: {ping:.2f} ms")
     print(" ")
     time.sleep(0.7)
     print(f"[+] İnternet Durumu: {internetdurumu}")
-    time.sleep(0.7)
     print("[+] Not: İnternet durumu pinge göre hesaplanır.")
     print(" ")
     time.sleep(0.7)
